@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "@monorepo/ui": ["packages/ui/src"],
+      "@monorepo/utils": ["packages/utils/src"]
+    }
+  }
+}
