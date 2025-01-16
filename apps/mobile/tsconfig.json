@@ -1,7 +1,19 @@
 {
   "extends": "../../tsconfig.base.json",
+  "include": ["../../@types/styled-components.d.ts"],
   "compilerOptions": {
     "jsx": "react-native",
-    "strict": true
+    "strict": true,
+    "types": ["react-native", "styled-components/native", "node"],
+    "plugins": [
+      {
+        "name": "typescript-styled-plugin",
+        "tags": ["styled", "css", "sty", "styles"]
+      },
+      {
+        "name": "typescript-styled-plugin",
+        "validate": false
+      }
+    ]
   }
 }
