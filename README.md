@@ -19,11 +19,11 @@
 
 ## ⚡ Por que é rápido?
 
-Este repositório usa [pnpm](https://pnpm.io/) e [Turborepo](https://turbo.build/repo) para acelerar as coisas. Com o pnpm, aproveitamos o desempenho da instalação usando o cache do armazenamento global. O Turborepo nos ajuda a executar certas tarefas e armazenar em cache o resultado se executarmos novamente as tarefas com a mesma entrada ou código. Nos fluxos de trabalho, armazenamos em cache o [pnpm store](./.github/actions/setup-monorepo/action.yml#L37) e o [Turborepo cache](./.github/actions/setup-monorepo/action.yml#L50-L56) usando o cache integrado do GitHub Actions, resultando no melhor desempenho possível.
+Este repositório usa [yarn](https://classic.yarnpkg.com/en/) e [Turborepo](https://turbo.build/repo) para acelerar as coisas. Com o pnpm, aproveitamos o desempenho da instalação usando o cache do armazenamento global. O Turborepo nos ajuda a executar certas tarefas e armazenar em cache o resultado se executarmos novamente as tarefas com a mesma entrada ou código. Nos fluxos de trabalho, armazenamos em cache o [Turborepo cache](./.github/actions/setup-monorepo/action.yml#L50-L56) usando o cache integrado do GitHub Actions, resultando no melhor desempenho possível.
 
 ### E o Metro?
 
-Em **apps/mobile**, aproveitamos o cache do Metro para acelerar a construção e a publicação. Usamos o Turborepo para restaurar ou invalidar esse cache. Para preencher esse cache do Metro, o **apps/mobile** tem um script [`$ pnpm build`](./apps/mobile/package.json#L9) que exporta pacotes React Native. O cache do Metro resultante é então reutilizado ao [prévias de publicação](./.github/workflows/preview.yml#L26-L28).
+Em **apps/mobile**, aproveitamos o cache do Metro para acelerar a construção e a publicação. Usamos o Turborepo para restaurar ou invalidar esse cache. Para preencher esse cache do Metro, o **apps/mobile** tem um script [`$ yarn build`](./apps/mobile/package.json#L9) que exporta pacotes React Native. O cache do Metro resultante é então reutilizado ao [prévias de publicação](./.github/workflows/preview.yml#L26-L28).
 
 ## ℹ️ Devo usá-lo?
 
@@ -37,38 +37,27 @@ Você pode usar e modificar este repositório como quiser. Se quiser usar o EAS 
 
 Para executar o repositório localmente, execute estes dois comandos:
 
-- `$ pnpm install` - Isso instala todas as bibliotecas Node necessárias usando [pnpm](https://pnpm.io/).
-- `$ pnpm dev` - Startsos servidores de desenvolvimento para todos "**apps**".
+- `$ yarn install or yarn` - Isso instala todas as bibliotecas Node necessárias usando [pnpm](https://pnpm.io/).
+- `$ yarn dev` - Startsos servidores de desenvolvimento para todos "**apps**".
 
 ### Comandos
 
-Como este monorepo usa [Turborepo](https://turbo.build/repo), você não precisa executar comandos adicionais para configurar as coisas. Sempre que você executar `$ pnpm build`, ele compilará todos os **pacotes** se eles ainda não tiverem sido compilados. Neste monorepo, usamos alguns comandos ou pipelines:
+Como este monorepo usa [Turborepo](https://turbo.build/repo), você não precisa executar comandos adicionais para configurar as coisas. Sempre que você executar `$ yarn build`, ele compilará todos os **pacotes** se eles ainda não tiverem sido compilados. Neste monorepo, usamos alguns comandos ou pipelines:
 
-- `$ pnpm dev` - Crie e monitore todos os **apps** e **pacotes** para desenvolvimento.
-- `$ pnpm lint` - Analise o código-fonte de todos os **apps** e **pacotes** usando ESLint.
-- `$ pnpm test` - Execute todos os testes para pacotes com testes Jest.
-- `$ pnpm build` - Crie todos os **apps** e **pacotes** para produção ou para publicá-los no npm.
+- `$ yarn dev` - Crie e monitore todos os **apps** e **pacotes** para desenvolvimento.
+- `$ yarn lint` - Analise o código-fonte de todos os **apps** e **pacotes** usando ESLint.
+- `$ yarn test` - Execute todos os testes para pacotes com testes Jest.
+- `$ yarn build` - Crie todos os **apps** e **pacotes** para produção ou para publicá-los no npm.
 
 Ao desenvolver ou implantar um único aplicativo, você pode não precisar do servidor de desenvolvimento para todos os aplicativos. Por exemplo, se você precisar fazer uma correção no aplicativo móvel, não precisará do servidor de desenvolvimento web. Ou ao implantar um único aplicativo para produção, você só precisa compilar esse único aplicativo com todas as dependências.
 
 Este monorepo usa uma convenção de script npm simples de `dev:<app-name>` e `build:<app-name>` para manter esse processo simples. Por baixo dos panos, ele usa [a filtragem de espaço de trabalho do Turborepo](https://turbo.build/repo/docs/core-concepts/monorepos/filtering), definida como um script npm na raiz [**package.json**](./package.json).
 
-- `$ pnpm dev:mobile` - Crie e observe **app/mobile** e todos os **pacotes** usados em dispositivos móveis, para desenvolvimento.
-- `$ pnpm dev:web` - Crie e monitore **app/web** e todos os **pacotes** usados na web, para desenvolvimento.
-- `$ pnpm build:mobile` - Crie **aplicativos/celulares** e todos os **pacotes** usados em dispositivos móveis, para implantações de produção
-- `$ pnpm build:web` - Crie **apps/web** e todos os **pacotes** usados na web, para implantações de produção
+- `$ yarn dev:mobile` - Crie e observe **app/mobile** e todos os **pacotes** usados em dispositivos móveis, para desenvolvimento.
+- `$ yarn dev:web` - Crie e monitore **app/web** e todos os **pacotes** usados na web, para desenvolvimento.
+- `$ yarn build:mobile` - Crie **aplicativos/celulares** e todos os **pacotes** usados em dispositivos móveis, para implantações de produção
+- `$ yarn build:web` - Crie **apps/web** e todos os **pacotes** usados na web, para implantações de produção
 
-### Mudando para bun, yarn ou npmm
-
-Você pode usar qualquer gerenciador de pacotes com o Expo. Se quiser usar bun, yarn ou pnpm, em vez de pnpm, tudo o que você precisa fazer é:
-
-- Remova **.npmrc**, **pnpm-lock.yaml** e **pnpm-workspace.yaml**.
-- Remova a propriedade `pnpm` do arquivo raiz **package.json**.
-- Adicione a propriedade [`workspaces`](https://docs.npmjs.com/cli/v8/using-npm/workspaces) ao arquivo raiz **package.json**.
-- Atualize os fluxos de trabalho para usar bun, yarn ou npm.
-
-> [!AVISO]
-> Infelizmente, o npm não suporta o [protocolo workspace](https://yarnpkg.com/protocol/workspace). Você também precisa alterar as referências `"<pacote>": "workspace:*"` para apenas `"<pacote>": "*"` para npm.
 
 ## 📁 Estrutura
 
@@ -106,7 +95,7 @@ $ yarn why react-native
 $ bun install --yarn && yarn why react-native
 
 # pnpm precisa de `--recursive` para pesquisar em todos os espaços de trabalho dentro do monorepo
-$ pnpm why --recursive react-native
+$ yarn why --recursive react-native
 ```
 
 Se você estiver usando várias versões, tente atualizar todos os arquivos **package.json** ou use um [`overrides`](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#overrides)/[`resolutions`](https://classic.yarnpkg.com/lang/en/docs/selective-version-resolutions/) no **package.json** raiz para forçar apenas uma versão do React Native.
@@ -119,18 +108,6 @@ Como o Turborepo manipula o cache neste repositório, podemos aproveitar [o cach
 
 > [!DICA]
 > O Expo agora suporta arquivos `.env` prontos para uso. Isso também significa que o Metro agora é inteligente o suficiente para invalidar o cache sempre que essas variáveis mudam. Não há mais necessidade de fazer isso manualmente.
-
-### Soluções alternativas para pnpm
-
-No ecossistema React Native atual, há muitas dependências implícitas. Elas podem ser do código nativo que é enviado dentro dos pacotes, ou mesmo dependências implícitas por meio da instalação de uma versão específica do Expo ou React Native. Nos gerenciadores de pacotes mais novos, como o pnpm, você terá problemas devido a essas dependências implícitas. Além disso, há outros problemas como [Metro não segue symlinks](https://github.com/facebook/metro/issues/1).
-
-Para contornar esses problemas, precisamos alterar algumas configurações:
-
-1. Deixe o pnpm gerar uma pasta **node_modules** simples, sem links simbólicos. Você pode fazer isso criando um arquivo raiz [**.npmrc**](./.npmrc) contendo ([`node-linker=hoisted`](https://pnpm.io/npmrc#node-linker)). Isso funciona em torno de duas coisas: nenhum suporte a links simbólicos Metro e ter uma maneira simples de determinar onde os módulos estão instalados (veja o ponto 3).
-
-2. Desabilite [`strict-peer-dependencies`](https://pnpm.io/npmrc#strict-peer-dependencies) ou adicione regras [`peerDependencyRules.ignoreMissing`](./package.json#L14-L22) no **package.json**. Isso desabilita alguns dos problemas esperados de dependências implícitas de pares. Sem essas alterações, o pnpm falhará na instalação, solicitando que você instale várias dependências de pares.
-
-3. Atualize a configuração **metro.config.js** para uso em monorepos. Uma explicação completa por opção de configuração pode ser encontrada nos [documentos do Expo](https://docs.expo.dev/guides/monorepos/#modify-the-metro-config). A única adição neste repositório é o [`config.cacheStores`](./apps/mobile/metro.config.js#L22-L24). Esta alteração move o cache do Metro para um local que é acessível pelo Turborepo, nosso principal manipulador de cache (veja [Por que ele é rápido?](#-why-is-it-fast)).
 
 ### Pacotes de pré-compilação
 
@@ -148,10 +125,10 @@ Se você quiser manter o keystore ou os certificados você mesmo, você tem que 
 
 ## ❌ Problemas comuns
 
-\_O projeto ainda está em desenvolvimento
+\_O projeto está em desenvolvimento, possíveis problemas poderão acontecer, mas estamos trabalhando para corrigir e melhorar sempre nosso repositório.
 
 <div align="center">
   <br />
-  Owner  <strong>Davyd Cardoso</strong>
+  Owner <strong>Davyd Cardoso</strong>
   <br />
 </div>
