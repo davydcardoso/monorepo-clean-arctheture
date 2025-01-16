@@ -1,5 +1,5 @@
 {
-  "name": "@monorepo/ui",
+  "name": "@module/ui",
   "version": "1.0.0",
   "main": "src/index.ts",
   "private": true

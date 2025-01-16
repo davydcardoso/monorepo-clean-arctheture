@@ -3,8 +3,19 @@
     "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
-      "@monorepo/ui": ["packages/ui/src"],
-      "@monorepo/utils": ["packages/utils/src"]
-    }
+      "@module/ui": ["packages/ui"],
+      "@module/core": ["packages/core"],
+    },
+    "types": ["react-native", "styled-components/native", "node"],
+    "plugins": [
+      {
+        "name": "typescript-styled-plugin",
+        "tags": ["styled", "css", "sty", "styles"]
+      },
+      {
+        "name": "typescript-styled-plugin",
+        "validate": false
+      }
+    ]
   }
 }

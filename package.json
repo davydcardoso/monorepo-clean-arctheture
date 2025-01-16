@@ -19,7 +19,10 @@
     "turbo": "^2.3.3"
   },
   "dependencies": {
-    "@monorepo/ui": "workspace:^",
-    "@monorepo/utils": "workspace:^"
+    "@module/core": "workspace:^",
+    "@module/ui": "workspace:^"
+  },
+  "resolutions": {
+    "styled-components": "^5"
   }
 }
