@@ -127,6 +127,21 @@ Se você quiser manter o keystore ou os certificados você mesmo, você tem que 
 
 \_O projeto está em desenvolvimento, possíveis problemas poderão acontecer, mas estamos trabalhando para corrigir e melhorar sempre nosso repositório.
 
+<h2>🐱‍👤 Autor</h2>
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/davydcardoso">
+        <img src="https://avatars.githubusercontent.com/u/64216701" width="100px;" alt="Foto do Davyd Cardoso no GitHub"/><br>
+        <sub>
+          <b>Davyd Cardoso</b>
+        </sub>
+      </a>
+    </td>
+  </tr>
+</table>
+
 <div align="center">
   <br />
   Owner <strong>Davyd Cardoso</strong>
